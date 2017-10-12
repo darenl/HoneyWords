@@ -9,13 +9,14 @@ class HoneyWordFactoryTest(TestCase):
         honeyword1 = hwf.create_honeyword(test_pw)
         
         self.assertNotEqual(test_pw, honeyword1)
-
-    def test_hwf_can_sequence_password(self):
-        test_pw = 'password1'
-        sequence = HoneyWordFactory.sequence(test_pw)
-        expected_sequence = ['word', 'int']
-
-        self.assertEqual(sequence,  expected_sequence)
+    
+    def test_hwf_can_create_random_honeyword(self):
+        hwf = HoneyWordFactory()
+        test_pw = 'securityissecure'
+        honeyword1 = hwf.create_honeyword(test_pw)
+        honeyword2 = hwf.create_honeyword(test_pw)
+        
+        self.assertNotEqual(honeyword1, honeyword2)
 
     def test_hwf_can_calculate_entropy(self):
         ent1 = HoneyWordFactory.calc_entropy('password1')

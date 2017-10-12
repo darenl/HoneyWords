@@ -1,16 +1,13 @@
 import math
+import random
+from helpers.word_segment import segment
 
 class HoneyWordFactory:
     def __init__(self, training_data = None):
         self.T = training_data
     
     def create_honeyword(self, password):
-        return password + '111'
-
-    @staticmethod
-    def sequence(password):
-        seq = []
-        return seq
+        return password + str(random.randint(0,9))*random.randint(1,3)
 
     @staticmethod
     def calc_entropy(string):
