@@ -1,3 +1,4 @@
+from collections import defaultdict, Counter
 import math
 import random
 import nltk
@@ -6,15 +7,37 @@ from helpers.segmentor import Segmentor
 class HoneyWordFactory:
     def __init__(self, training_data = None):
         self.T = training_data
-        self.digits = [i*4 for i in '0123456789'] + [i*3 for i in '0123456789'] + ['1234','123456789']
+        ints = '0123456789'
+        self.digits = [i*4 for i in ints] + [i*3 for i in ints] + ['1234',ints]
         self.brown = nltk.corpus.brown.words()
+        self.pos_words = self.build_pos_dict()
         self.seg = Segmentor(corpus= self.brown + self.digits)
 
-    def create_honeyword(self, password):
-        words = self.seg.segment(password))
-        parts_of_speech = nltk.pos_tag(words)
+    def build_pos_dict(self):
+        counts = Counter(self.brown)
+        tagged = nltk.corpus.brown.tagged_words(tagset='universal')
+        words = defaultdict(list)
+        for word, pos in tagged:
+            if counts[word] < 100 and counts[word] > 5:
+                words[pos].append(word)
+        return words
 
-        return password + str(random.randint(0,9))*random.randint(1,3)
+    def create_honeyword(self, password):
+        return self.tweak(password)
+    
+    def tweak(self, password):
+        words = self.seg.segment(password)
+        parts_of_speech = nltk.pos_tag(words, tagset='universal')
+
+        index = random.randint(0,len(words)-1)
+        pos = parts_of_speech[index][1]
+        
+        if pos == 'CD':
+            tweaked_num = str(int(words[index]) + 1)
+            words[index] = random.choice(self.digits + [tweaked_num]*random.randint(0,len(self.digits)))
+        else:
+            words[index] = random.choice(self.pos_words[pos])
+        return ''.join(words)
 
     @staticmethod
     def calc_entropy(string):

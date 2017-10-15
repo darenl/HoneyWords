@@ -1,5 +1,5 @@
 from unittest import TestCase
-from honey_word_factory import HoneyWordFactory
+from honey_word_factory.honey_word_factory import HoneyWordFactory
 
 
 class HoneyWordFactoryTest(TestCase):
