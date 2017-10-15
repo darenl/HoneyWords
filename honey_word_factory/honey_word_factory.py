@@ -1,13 +1,18 @@
 import math
 import random
-from helpers.helpers import segment
+import nltk
+from helpers.segmentor import Segmentor
 
 class HoneyWordFactory:
     def __init__(self, training_data = None):
         self.T = training_data
-    
+        self.digits = [i*4 for i in '0123456789'] + [i*3 for i in '0123456789'] + ['1234','123456789']
+        self.brown = nltk.corpus.brown.words()
+        self.seg = Segmentor(corpus= self.brown + self.digits)
+
     def create_honeyword(self, password):
-        print(segment(password))
+        words = self.seg.segment(password))
+        parts_of_speech = nltk.pos_tag(words)
 
         return password + str(random.randint(0,9))*random.randint(1,3)
 

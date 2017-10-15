@@ -1,8 +1,11 @@
 from unittest import TestCase
 from segmentor import Segmentor
+import nltk
 
+digits = [i*4 for i in '0123456789'] + [i*3 for i in '0123456789'] + ['1234','123456789']
+brown = nltk.corpus.brown.words()
 
-seg = Segmentor()
+seg = Segmentor(corpus= brown + digits)
 
 class SegmentorTest(TestCase):
     def test_segmentor_can_split(self):

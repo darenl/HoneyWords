@@ -1,6 +1,6 @@
 
 from collections import Counter
-import re, nltk, functools, operator
+import re, functools, operator
 
 class Segmentor:
     """
@@ -10,12 +10,8 @@ class Segmentor:
     # Code mostly taken from the link below
     # https://stackoverflow.com/questions/38125281/split-sentence-without-space-in-python-nltk
     """
-    def __init__(self, corpus=nltk.corpus.brown.words()):
-        dig4 = [i*4 for i in '0123456789'] 
-        dig3 = [i*3 for i in '0123456789']
-        digpattern = ['1234','123456789']
-        likely_numbers = dig4+dig3+digpattern
-        self.WORDS = corpus + likely_numbers
+    def __init__(self, corpus):
+        self.WORDS = corpus
         self.COUNTS = Counter(self.WORDS)
         self.N = sum(self.COUNTS.values()) # Number of words in Brown
     
