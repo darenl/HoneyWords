@@ -1,5 +1,5 @@
 import sys
-from honey_word_factory import HoneyWordFactory
+from honey_word_factory.honey_word_factory import HoneyWordFactory
 
 #algorithm1.py, n, input_file, output_file
 _, n, input_file, output_file = sys.argv

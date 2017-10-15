@@ -1,12 +1,14 @@
 import math
 import random
-from helpers.word_segment import segment
+from helpers.helpers import segment
 
 class HoneyWordFactory:
     def __init__(self, training_data = None):
         self.T = training_data
     
     def create_honeyword(self, password):
+        print(segment(password))
+
         return password + str(random.randint(0,9))*random.randint(1,3)
 
     @staticmethod
